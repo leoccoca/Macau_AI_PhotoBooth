@@ -1,0 +1,12 @@
+{
+	"debugLog": 1,
+	"webCamName": "USB Camera",
+	"imageDirectory": "C:\\MT\\AI_PhotoBooth_Record",
+	"webServerURL": "https://ttdctvevent2025.sharing.com.hk/",
+	
+	"posterMobilePage": "https://ttdctvevent2025.sharing.com.hk/displayPoster.php?job_id=",
+	"apiTimeout": 180,
+	"printQuotaPerDay": 300,
+	"cameraIconOffset": 200,
+	"HavePrintFunction":  1
+}

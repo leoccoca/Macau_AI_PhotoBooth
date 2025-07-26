@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SelectPosterPage : UIPage
+{
+    [SerializeField] List<PosterTemplate> posterTemplates;
+
+    [SerializeField] Button backBtn;
+    [SerializeField] Button nextBtn;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        backBtn.onClick.AddListener(OnBackBtnClick);
+        nextBtn.onClick.AddListener(OnNextBtnClick);
+    }
+
+    void OnDestroy()
+    {
+        backBtn.onClick.RemoveListener(OnBackBtnClick);
+        nextBtn.onClick.RemoveListener(OnNextBtnClick);
+    }
+
+    public override void OpenPage()
+    {
+        base.OpenPage();
+        toggleReset();
+
+        int selectedCTV = GameManager.Instance.SelectedCTV;
+        string selectedGender = GameManager.Instance.SelectedGender;
+
+        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Category == selectedCTV) && (x.Gender == selectedGender));
+        //List<PosterInfo> filteredPosters = ctvPosters.FindAll(x => x.Gender == selectedGender);
+
+        for (int i=0; i<filteredPosters.Count; i++)
+        {
+            if (i == posterTemplates.Count)
+            {
+                break;
+            }
+            posterTemplates[i].Id = filteredPosters[i].Id;
+            posterTemplates[i].PosterTexture = filteredPosters[i].Texture;
+            
+        }
+
+        if (posterTemplates.Count > 0)
+        {
+            posterTemplates[0].PosterToggle.isOn = true;
+        }
+    }
+
+    public void OnNextBtnClick()
+    {
+        var selectedToggle = posterTemplates.Find(x => x.PosterToggle.isOn);
+
+        if (selectedToggle == null)
+        {
+            Debug.Log("SelectPosterPage error, cannot find selected toggle.");
+            return;
+        }
+
+        int selectedId = selectedToggle.Id;
+        GameManager.Instance.AssignSelectedPoster(selectedId);
+        SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
+        UIManager.Instance.Open<PhotoTakingPage>();
+    }
+
+    public void OnBackBtnClick()
+    {
+        SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
+        UIManager.Instance.Open<SelectGenderPage>();
+        toggleReset();
+    }
+
+    void toggleReset()
+    {
+        foreach (var item in posterTemplates) 
+        {
+            item.PosterToggle.isOn = false;
+        }
+    }
+}
