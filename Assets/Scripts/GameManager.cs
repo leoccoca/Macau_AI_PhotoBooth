@@ -53,24 +53,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    int selectedCTV;
-    public int SelectedCTV
-    {
-        get => selectedCTV;
-        set
-        {
-            if (value >=1 && value<=3)
-            {
-                selectedCTV = value;
-                DebugManager.Instance.Ctv = selectedCTV;
-            }
-            else
-            {
-                Debug.LogError($"Set CTV error, must either 1/2/3.");
-            }
-        }
-    }
-
     public List<PosterInfo> PosterInfos { get; private set; }
 
     PosterInfo selectedPoster;
@@ -181,11 +163,6 @@ public class GameManager : MonoBehaviour
         homeBtn.onClick.RemoveListener(RestartGame);
     }
 
-    public void AssignDefaultValue()
-    {
-        SelectedGender = GameDefine.MALE;
-        SelectedCTV = 1;
-    }
 
     public void GetAllPoster()
     {
@@ -195,7 +172,7 @@ public class GameManager : MonoBehaviour
     public void PosterCallback(string text)
     {
         JSONNode json = SimpleJSON.JSON.Parse(text);
-
+        Debug.Log("Callback");
         if (json == null)
         {
             Debug.LogError("PosterCallback error, json is null");
@@ -353,7 +330,7 @@ public class GameManager : MonoBehaviour
     public void ResetData()
     {
         SelectedGender = GameDefine.MALE;
-        SelectedCTV = 1;
+        selectedPlayers = 0;
         JobId = Guid.NewGuid().ToString();
         IsRetakeAlready = false;
         SelfiePath = "";

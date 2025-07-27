@@ -37,6 +37,6 @@ public class HomePage : UIPage
             return;
         }
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
-        UIManager.Instance.Open<SelectCTVPage>();
+        UIManager.Instance.Open<SelectGenderPage>();
     }
 }

@@ -45,6 +45,13 @@ public class SelectNumberOfPlayer : UIPage
             return;
         }
         GameManager.Instance.SelectedPlayer = int.Parse(selectedToggle.name);
-        UIManager.Instance.Open<SelectGenderPage>();
+        if(GameManager.Instance.SelectedPlayer == 1)
+        {
+            UIManager.Instance.Open<SelectGenderPage>();
+        }
+        else
+        {
+            UIManager.Instance.Open<SelectPosterPage>();
+        }
     }
 }

@@ -110,6 +110,7 @@ public class WebRequestManager : MonoBehaviour
 
         if (www.result == UnityWebRequest.Result.Success)
         {
+            Debug.Log("Downloading");
             successCallback?.Invoke(www.downloadHandler.text);
         }
         else
@@ -205,9 +206,7 @@ public class WebRequestManager : MonoBehaviour
 public class PosterInfo
 {
     public int Id { get; set; }
-
     public int Category { get; set; }
-
     public string Name { get; set; }
     public string Gender { get; set; }
     public string Prompt { get; set; }

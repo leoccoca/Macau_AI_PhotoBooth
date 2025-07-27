@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SelectPosterPage : UIPage
 {
     [SerializeField] List<PosterTemplate> posterTemplates;
+    [SerializeField] ToggleGroup toggleGroup;
 
     [SerializeField] Button backBtn;
     [SerializeField] Button nextBtn;
@@ -26,13 +27,26 @@ public class SelectPosterPage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
-        toggleReset();
+        base.ResetToggles(toggleGroup);
 
-        int selectedCTV = GameManager.Instance.SelectedCTV;
         string selectedGender = GameManager.Instance.SelectedGender;
+        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender));
+        /*
+        if (GameManager.Instance.SelectedPlayer == 1)
+        {
+            selectedGender = GameManager.Instance.SelectedGender;
+            filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.players == 1)&&(x.Gender == selectedGender));
+        }
+        else if (GameManager.Instance.SelectedPlayer == 2)
+        {
+            filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.players == 2));
+        }
+        else
+        {
+            Debug.LogError("Invalid Players number: "+GameManager.Instance.SelectedPlayer);
+        }
+        */
 
-        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Category == selectedCTV) && (x.Gender == selectedGender));
-        //List<PosterInfo> filteredPosters = ctvPosters.FindAll(x => x.Gender == selectedGender);
 
         for (int i=0; i<filteredPosters.Count; i++)
         {
@@ -71,14 +85,5 @@ public class SelectPosterPage : UIPage
     {
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         UIManager.Instance.Open<SelectGenderPage>();
-        toggleReset();
-    }
-
-    void toggleReset()
-    {
-        foreach (var item in posterTemplates) 
-        {
-            item.PosterToggle.isOn = false;
-        }
     }
 }

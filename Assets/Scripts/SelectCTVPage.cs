@@ -26,8 +26,7 @@ public class SelectCTVPage : UIPage
     {
         base.OpenPage();
         //TTD AI Photobooth, default no selection(set -1, selection in 1,2,3)
-        //int ctv = GameManager.Instance.SelectedCTV;
-        int ctv = -1;
+        int ctv = GameManager.Instance.SelectedPlayer;
         var defaultToggle = toggles.Find(x => x.name == ctv.ToString());
 
         if (defaultToggle != null )
@@ -48,7 +47,7 @@ public class SelectCTVPage : UIPage
         {
             return;
         }
-        GameManager.Instance.SelectedCTV = int.Parse( selectedToggle.name);
+        //GameManager.Instance.SelectedCTV = int.Parse( selectedToggle.name);
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         UIManager.Instance.Open<SelectGenderPage>();
         toggleReset();

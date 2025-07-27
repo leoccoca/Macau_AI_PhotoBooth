@@ -9,20 +9,20 @@ public class SelectGenderPage : UIPage
     [SerializeField] List<Toggle> toggles;
     [SerializeField] ToggleGroup toggleGroup;
 
-    [SerializeField] Button backBtn;
     [SerializeField] Button nextBtn;
+    [SerializeField] Button backBtn;
 
     // Start is called before the first frame update
     void Start()
     {
-        backBtn.onClick.AddListener(OnBackBtnClick);
         nextBtn.onClick.AddListener(OnNextBtnClick);
+        //backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     private void OnDestroy()
     {
-        backBtn.onClick.AddListener(OnBackBtnClick);
         nextBtn.onClick.RemoveListener(OnNextBtnClick);
+        //backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     public override void OpenPage()
@@ -55,7 +55,6 @@ public class SelectGenderPage : UIPage
 
     public void OnBackBtnClick()
     {
-        SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
-        UIManager.Instance.Open<SelectCTVPage>();
+        UIManager.Instance.Open<SelectNumberOfPlayer>();
     }
 }
