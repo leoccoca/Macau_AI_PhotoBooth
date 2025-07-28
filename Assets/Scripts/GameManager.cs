@@ -17,7 +17,20 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
     public static GameManager Instance => instance;
 
+    public bool AIProcessSucess;
+    public bool DownloadPhotoIsReady;
+    public Type AfterSurveyPage;
     public string JobId { get; private set; }
+
+    public LanguageController.langOptions selectedLanguage;
+    public LanguageController.langOptions SelecteLanguage
+    {
+        get => SelecteLanguage;
+        set
+        {
+            selectedLanguage = value;
+        }
+    }
 
     string selectedGender;
     public string SelectedGender
@@ -25,30 +38,30 @@ public class GameManager : MonoBehaviour
         get => selectedGender;
         set
         {
-            if (value == GameDefine.MALE || value == GameDefine.FEMALE)
+            if (value == GameDefine.MALE || value == GameDefine.FEMALE || value == GameDefine.MALEKID || value == GameDefine.FEMALEKID)
             {
                 selectedGender = value;
                 DebugManager.Instance.Gender = selectedGender;
             } else
             {
-                Debug.LogError($"Set Gender error, must either {GameDefine.MALE} or {GameDefine.FEMALE}.");
+                Debug.LogError($"Set Gender error,");
             }
         }
     }
 
-    int selectedPlayers;
-    public int SelectedPlayer
+    int selectSpot;
+    public int SelectedSpot
     {
-        get => selectedPlayers;
+        get => selectSpot;
         set
         {
-            if (value >= 1 && value <= 2)
+            if (value >= 1 && value <= 4)
             {
-                selectedPlayers = value;
+                selectSpot = value;
             }
             else
             {
-                Debug.LogError($"Set player error, must either 1/2/2.");
+                Debug.LogError($"Set spot error, must either 1/2/3/4.");
             }
         }
     }
@@ -172,7 +185,6 @@ public class GameManager : MonoBehaviour
     public void PosterCallback(string text)
     {
         JSONNode json = SimpleJSON.JSON.Parse(text);
-        Debug.Log("Callback");
         if (json == null)
         {
             Debug.LogError("PosterCallback error, json is null");
@@ -296,16 +308,25 @@ public class GameManager : MonoBehaviour
         
         JSONNode json = JSON.Parse(res);
 
-        bool isSuccess = json["success"].AsBool;
+        AIProcessSucess = json["success"].AsBool;
 
-        if (isSuccess)
+        if (AIProcessSucess)
         {
             string photoUrl = json["face_swap_photo_url"];
             StartCoroutine(WebRequestManager.Instance.DownloadImage(photoUrl, DownloadImageSuccessCallback, DownloadImageFailCallback));
         } else
         {
             GameError = ErrorType.ApiError;
-            UIManager.Instance.Open<TryAgainPage>();
+            //UIManager.Instance.Open<TryAgainPage>();
+            if (Surveypage.Instance.SurveyCompleted)
+            {
+                UIManager.Instance.Open<TryAgainPage>();
+            }
+            else
+            {
+                AfterSurveyPage = typeof(TryAgainPage);
+            }
+
         }
     }
 
@@ -313,30 +334,61 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("UploadPhotoFail res: " + res);
         GameError = ErrorType.NetworkError;
-        UIManager.Instance.Open<TryAgainPage>();
+        //UIManager.Instance.Open<TryAgainPage>();
+        if (Surveypage.Instance.SurveyCompleted)
+        {
+            UIManager.Instance.Open<TryAgainPage>();
+        }
+        else
+        {
+            AfterSurveyPage = typeof(TryAgainPage);
+        }
+
     }
 
     void DownloadImageSuccessCallback(Texture2D tex)
     {
+        DownloadPhotoIsReady = true;
         Webcam.instance.FinalPosterImage.texture = tex;
-        UIManager.Instance.Open<ResultPage>();
+        //if survet complete before Get the result
+        //UIManager.Instance.Open<ResultPage>();
+        if (Surveypage.Instance.SurveyCompleted)
+        {
+            UIManager.Instance.Open<ResultPage>();
+        }
+        else
+        {
+            AfterSurveyPage = typeof(ResultPage);
+        }
     }
 
     void DownloadImageFailCallback()
     {
-        UIManager.Instance.Open<TryAgainPage>();
+        DownloadPhotoIsReady = false;
+        //if survet complete before Get the result
+        //UIManager.Instance.Open<TryAgainPage>();
+        if (Surveypage.Instance.SurveyCompleted)
+        {
+            UIManager.Instance.Open<ResultPage>();
+        }
+        else
+        {
+            AfterSurveyPage = typeof(TryAgainPage);
+        }
     }
 
     public void ResetData()
     {
         SelectedGender = GameDefine.MALE;
-        selectedPlayers = 0;
+        SelectedSpot = 1;
         JobId = Guid.NewGuid().ToString();
         IsRetakeAlready = false;
         SelfiePath = "";
         PosterPath = "";
         GameError = ErrorType.None;
         SelectedPoster = null;
+        DownloadPhotoIsReady = false;
+        AIProcessSucess = false;
 
         WebRequestManager.Instance.GetTodayPrintJobCount(GetTodayPrintJobCallback);
         WebRequestManager.Instance.GetTotalPrintJobCount(GetTotalPrintJobCallback);

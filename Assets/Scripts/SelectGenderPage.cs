@@ -50,11 +50,11 @@ public class SelectGenderPage : UIPage
             return;
         }
         GameManager.Instance.SelectedGender = selectedToggle.name;
-        UIManager.Instance.Open<SelectPosterPage>();
+        UIManager.Instance.Open<SelectSpot>();
     }
 
     public void OnBackBtnClick()
     {
-        UIManager.Instance.Open<SelectNumberOfPlayer>();
+        UIManager.Instance.Open<SelectGenderPage>();
     }
 }

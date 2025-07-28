@@ -30,7 +30,8 @@ public class SelectPosterPage : UIPage
         base.ResetToggles(toggleGroup);
 
         string selectedGender = GameManager.Instance.SelectedGender;
-        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender));
+        int selectedSpot = GameManager.Instance.SelectedSpot;
+        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender)&& (x.Category == selectedSpot));
         /*
         if (GameManager.Instance.SelectedPlayer == 1)
         {
@@ -84,6 +85,6 @@ public class SelectPosterPage : UIPage
     public void OnBackBtnClick()
     {
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
-        UIManager.Instance.Open<SelectGenderPage>();
+        UIManager.Instance.Open<SelectSpot>();
     }
 }

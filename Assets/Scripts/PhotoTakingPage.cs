@@ -11,7 +11,7 @@ public class PhotoTakingPage : UIPage
 
     [SerializeField] Button shootBtn;
     [SerializeField] Button confirmBtn;
-    // [SerializeField] Button retakeBtn;
+    [SerializeField] Button retakeBtn;
 
     //
     [SerializeField] Image PoseText;
@@ -33,7 +33,7 @@ public class PhotoTakingPage : UIPage
 
         shootBtn.onClick.AddListener(OnShootBtnClick);
         confirmBtn.onClick.AddListener(OnConfirmBtnClick);
-        //retakeBtn.onClick.AddListener(OnRetakeBtnClick);
+        retakeBtn.onClick.AddListener(OnRetakeBtnClick);
 
         cameraIconTrans.position += new Vector3(0, ConfigManager.Instance.clientConfig.cameraIconOffset, 0);
     }
@@ -42,7 +42,7 @@ public class PhotoTakingPage : UIPage
     {
         shootBtn.onClick.RemoveListener(OnShootBtnClick);
         confirmBtn.onClick.RemoveListener(OnConfirmBtnClick);
-        //retakeBtn.onClick.RemoveListener(OnRetakeBtnClick);
+        retakeBtn.onClick.RemoveListener(OnRetakeBtnClick);
     }
 
     public override void OpenPage()
@@ -120,7 +120,7 @@ public class PhotoTakingPage : UIPage
         GameManager.Instance.SaveSelfieAsJPEG(outputTex);
         GameManager.Instance.WriteLocalReport();
         GameManager.Instance.UploadPhotoForAIProcess();
-        UIManager.Instance.Open<LoadingPage>();
+        UIManager.Instance.Open<Surveypage>();
     }
 
     void OnRetakeBtnClick()
@@ -129,7 +129,7 @@ public class PhotoTakingPage : UIPage
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
 
         shootBtn.gameObject.SetActive(true);
-      //  retakeBtn.gameObject.SetActive(false);
+        retakeBtn.gameObject.SetActive(false);
         confirmBtn.gameObject.SetActive(false);
 
         captureImage.texture = Webcam.instance.LiveCameraTexture;
@@ -141,7 +141,7 @@ public class PhotoTakingPage : UIPage
     public void HideAllBtn()
     {
         shootBtn.gameObject.SetActive(false);
-      //  retakeBtn.gameObject.SetActive(false);
+        retakeBtn.gameObject.SetActive(false);
         confirmBtn.gameObject.SetActive(false);
     }
 }

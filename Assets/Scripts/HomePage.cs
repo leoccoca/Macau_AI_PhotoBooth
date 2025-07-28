@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HomePage : UIPage
 {
     [SerializeField] Button startBtn;
+
 
     // Start is called before the first frame update
     void Start()
@@ -14,17 +16,17 @@ public class HomePage : UIPage
         startBtn.onClick.AddListener(OnStartBtnClick);
     }
 
-    public override void OpenPage()
-    {
-        base.OpenPage();
-
-        GameManager.Instance.IsShowHomeBtn = false;
-    }
-
     void OnDestroy()
     {
         Debug.Log("HomePage.OnDestroy()");
         startBtn.onClick.RemoveListener(OnStartBtnClick);
+    }
+
+    public override void OpenPage()
+    {
+        base.OpenPage();
+        OnLanguageChange((int)LanguageController.langOptions.en);
+        GameManager.Instance.IsShowHomeBtn = false;
     }
 
     void OnStartBtnClick()
@@ -37,6 +39,12 @@ public class HomePage : UIPage
             return;
         }
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
-        UIManager.Instance.Open<SelectGenderPage>();
+        UIManager.Instance.Open<SelectSpot>();
+    }
+
+
+    public void OnLanguageChange(int lang)
+    {
+        LanguageController.Instance.ChangeLanguage((LanguageController.langOptions) lang);
     }
 }

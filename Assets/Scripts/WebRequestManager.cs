@@ -110,7 +110,6 @@ public class WebRequestManager : MonoBehaviour
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Downloading");
             successCallback?.Invoke(www.downloadHandler.text);
         }
         else

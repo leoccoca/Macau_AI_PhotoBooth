@@ -1,41 +1,41 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-/* 20250714 TTDAI  CTV selection*/
-public class SelectCTVPage : UIPage
+public class SelectSpot : UIPage
 {
     [SerializeField] List<Toggle> toggles;
+    [SerializeField] ToggleGroup toggleGroup;
     [SerializeField] Button nextBtn;
+    [SerializeField] Button backBtn;
 
     // Start is called before the first frame update
     void Start()
     {
         nextBtn.onClick.AddListener(OnNextBtnClick);
+        //backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     private void OnDestroy()
     {
         nextBtn.onClick.RemoveListener(OnNextBtnClick);
+        //backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     public override void OpenPage()
     {
         base.OpenPage();
-        //TTD AI Photobooth, default no selection(set -1, selection in 1,2,3)
-        int ctv = GameManager.Instance.SelectedPlayer;
-        var defaultToggle = toggles.Find(x => x.name == ctv.ToString());
+        int lastSpot = GameManager.Instance.SelectedSpot;
+        var defaultToggle = toggles.Find(x => x.name == lastSpot.ToString());
 
-        if (defaultToggle != null )
+        if (defaultToggle != null)
         {
             defaultToggle.isOn = true;
         }
         else
         {
-            DebugManager.Instance.Ctv = -1;
+            base.ResetToggles(toggleGroup);
         }
     }
 
@@ -47,17 +47,12 @@ public class SelectCTVPage : UIPage
         {
             return;
         }
-        //GameManager.Instance.SelectedCTV = int.Parse( selectedToggle.name);
+        GameManager.Instance.SelectedSpot = int.Parse(selectedToggle.name);
+        UIManager.Instance.Open<SelectPosterPage>();
+    }
+    public void OnBackBtnClick()
+    {
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         UIManager.Instance.Open<SelectGenderPage>();
-        toggleReset();
-    }
-
-    void toggleReset()
-    {
-        foreach (Toggle toggle in toggles)
-        {
-            toggle.isOn = false;
-        }
     }
 }
