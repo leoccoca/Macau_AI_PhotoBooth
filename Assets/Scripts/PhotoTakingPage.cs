@@ -13,15 +13,20 @@ public class PhotoTakingPage : UIPage
     [SerializeField] Button confirmBtn;
     [SerializeField] Button retakeBtn;
 
+
+    [SerializeField] GameObject CountDown;
     //
     [SerializeField] Image PoseText;
+    [SerializeField] GameObject LookAtCam;
     [SerializeField] Image reviewText;
 
     [SerializeField] RawImage captureImage;
     [SerializeField] Transform frameImageTrans;
 
+    [SerializeField] Animator countdownAnimator;
+
     Coroutine shootCountdownCr;
-    Animator countdownAnimator;
+    Animator CameraArrowAnimator;
 
     [SerializeField] Transform cameraIconTrans;
 
@@ -56,10 +61,13 @@ public class PhotoTakingPage : UIPage
         confirmBtn.gameObject.SetActive(false);
 
         PoseText.gameObject.SetActive(true);
+        LookAtCam.gameObject.SetActive(false);
         reviewText.gameObject.SetActive(false);
 
         photoReadyGO.SetActive(true);
         photoReviewGO.SetActive(false);
+
+        CountDown.SetActive(false);
     }
 
     void OnShootBtnClick()
@@ -68,12 +76,17 @@ public class PhotoTakingPage : UIPage
         GameManager.Instance.IsShowHomeBtn = false;
         shootBtn.gameObject.SetActive(false);
         countdownAnimator.SetTrigger("Play");
+        countdownAnimator.SetTrigger("Play");
 
         if (shootCountdownCr != null)
         {
             return;
         }
         shootCountdownCr = StartCoroutine(StartCountdown(ShootPhotoCallback));
+
+        reviewText.gameObject.SetActive(false);
+        PoseText.gameObject.SetActive(false);
+        LookAtCam.gameObject.SetActive(true);
     }
 
     public void ShootPhotoCallback()
@@ -82,7 +95,7 @@ public class PhotoTakingPage : UIPage
         GameManager.Instance.IsShowHomeBtn = true;
         bool isRetakeAlready = GameManager.Instance.IsRetakeAlready;
 
-      //  retakeBtn.gameObject.SetActive(!isRetakeAlready);
+        retakeBtn.gameObject.SetActive(!isRetakeAlready);
         confirmBtn.gameObject.SetActive(true);
 
         captureImage.texture = Webcam.instance.CapturePhoto();
@@ -91,12 +104,16 @@ public class PhotoTakingPage : UIPage
         photoReviewGO.SetActive(true);
 
 
+        CountDown.SetActive(false);
         PoseText.gameObject.SetActive(false);
+        LookAtCam.gameObject.SetActive (false);
         reviewText.gameObject.SetActive(true);
+
     }
 
     IEnumerator StartCountdown(Action callback)
     {
+        CountDown.SetActive(true);
         int elapsedSecond = 0;
 
         while (elapsedSecond < GameDefine.SELFIE_DELAY)
@@ -106,6 +123,8 @@ public class PhotoTakingPage : UIPage
             elapsedSecond++;
         }
         countdownAnimator.SetTrigger("Reset");
+        countdownAnimator.SetTrigger("Reset");
+
         shootCountdownCr = null;
         callback?.Invoke();
     }
