@@ -22,16 +22,6 @@ public class GameManager : MonoBehaviour
     public Type AfterSurveyPage;
     public string JobId { get; private set; }
 
-    public LanguageController.langOptions selectedLanguage;
-    public LanguageController.langOptions SelecteLanguage
-    {
-        get => SelecteLanguage;
-        set
-        {
-            selectedLanguage = value;
-        }
-    }
-
     string selectedGender;
     public string SelectedGender
     {

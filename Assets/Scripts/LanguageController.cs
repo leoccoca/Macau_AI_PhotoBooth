@@ -1,50 +1,54 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LanguageController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static LanguageController Instance { get; private set; }
 
-    static LanguageController instance;
+    public enum langOptions { en, tc, sc }
+    public langOptions currentLanguage = langOptions.en;
 
-    public enum langOptions
+    [System.Serializable]
+    public class LocalizedObject
     {
-        en,
-        tc,
-        sc
+        public string key;
+        public GameObject enObj;
+        public GameObject tcObj;
+        public GameObject scObj;
     }
 
+    public List<LocalizedObject> localizedObjects = new List<LocalizedObject>();
 
-    public static LanguageController Instance => instance;
+    public static event System.Action OnLanguageChanged;
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
+            Instance = this;
+        else
         {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Debug.LogError("Multiple singleton object created, gameobject: " + gameObject.name);
+            Debug.LogError("Multiple LanguageController instances detected. Destroying: " + gameObject.name);
             Destroy(gameObject);
         }
     }
-
-    public void ChangeLanguage(LanguageController.langOptions lang)
+    public void ChangeLanguage(langOptions newLang)
     {
-        GameManager.Instance.selectedLanguage = lang;
-        switch (lang)
+        if (currentLanguage == newLang) return;
+
+        currentLanguage = newLang;
+        OnLanguageChanged?.Invoke();
+        //ApplyLanguage(newLang);
+    }
+
+    private void ApplyLanguage(langOptions lang)
+    {
+        foreach (var obj in localizedObjects)
         {
-            case langOptions.en:
-                Debug.Log("Language EN");
-                break;
-            case langOptions.tc:
-                Debug.Log("Language TC");
-                break;
-            case langOptions.sc:
-                Debug.Log("Language SC");
-                break;
+            if (obj.enObj != null) obj.enObj.SetActive(lang == langOptions.en);
+            if (obj.tcObj != null) obj.tcObj.SetActive(lang == langOptions.tc);
+            if (obj.scObj != null) obj.scObj.SetActive(lang == langOptions.sc);
         }
+
+        Debug.Log("Language changed to: " + lang);
     }
 }
