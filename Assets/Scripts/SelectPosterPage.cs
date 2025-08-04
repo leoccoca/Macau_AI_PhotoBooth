@@ -31,7 +31,8 @@ public class SelectPosterPage : UIPage
 
         string selectedGender = GameManager.Instance.SelectedGender;
         int selectedSpot = GameManager.Instance.SelectedSpot;
-        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender)&& (x.Category == selectedSpot));
+        List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => x.Category == selectedSpot);
+        //List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender)&& (x.Category == selectedSpot));
         /*
         if (GameManager.Instance.SelectedPlayer == 1)
         {
