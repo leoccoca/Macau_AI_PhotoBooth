@@ -26,7 +26,7 @@ public class PhotoTakingPage : UIPage
     [SerializeField] Animator countdownAnimator;
 
     Coroutine shootCountdownCr;
-    Animator CameraArrowAnimator;
+    [SerializeField] Animator CameraArrowAnimator;
 
     [SerializeField] Transform cameraIconTrans;
 
@@ -76,7 +76,7 @@ public class PhotoTakingPage : UIPage
         GameManager.Instance.IsShowHomeBtn = false;
         shootBtn.gameObject.SetActive(false);
         countdownAnimator.SetTrigger("Play");
-        countdownAnimator.SetTrigger("Play");
+        CameraArrowAnimator.SetTrigger("Play");
 
         if (shootCountdownCr != null)
         {
@@ -123,7 +123,7 @@ public class PhotoTakingPage : UIPage
             elapsedSecond++;
         }
         countdownAnimator.SetTrigger("Reset");
-        countdownAnimator.SetTrigger("Reset");
+        CameraArrowAnimator.SetTrigger("Reset");
 
         shootCountdownCr = null;
         callback?.Invoke();

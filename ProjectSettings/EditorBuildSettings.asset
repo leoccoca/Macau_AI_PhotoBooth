@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PhotoBoothScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/MACAU AI Photobooth.unity
+    guid: 687d31dc827ba6b428ac79d2f353e852
   m_configObjects: {}
