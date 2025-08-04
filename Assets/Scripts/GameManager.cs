@@ -295,8 +295,8 @@ public class GameManager : MonoBehaviour
     void UploadPhotoForAIProcessSuccessCallback(string res)
     {
         Debug.Log("UploadPhotoSuccess res: " + res);
-        
-        JSONNode json = JSON.Parse(res);
+
+        JSONNode json = JSON.Parse(res = res.Trim('\uFEFF'));
 
         AIProcessSucess = json["success"].AsBool;
 
