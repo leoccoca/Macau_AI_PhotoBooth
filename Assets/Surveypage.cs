@@ -31,21 +31,15 @@ public class Surveypage : UIPage
         }
     }
 
-    private void Start()
+    public override void OpenPage()
     {
+        base.OpenPage();
+        SurveyCompleted = false;
+        ResetQuestion();
         GameManager.Instance.IsShowHomeBtn = false;
         ResetQuestion();
         NextQuestion(currentQuestion);
     }
-    /*
-    public override void OpenPage()
-    {
-        base.OpenPage();
-        GameManager.Instance.IsShowHomeBtn = false;
-        ResetQuestion();
-        ShowQuestion(currentQuestion);
-    }
-    */
 
     void ResetQuestion()
     {
@@ -63,7 +57,6 @@ public class Surveypage : UIPage
         currentQuestion += 1;
         questions[currentQuestion].gameObject.SetActive(true);
 
-        Debug.Log(currentQuestion);
     }
 
     void NextQuestion(int question)

@@ -26,6 +26,7 @@ public class SelectSpot : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        GameManager.Instance.IsShowHomeBtn = true; 
         int lastSpot = GameManager.Instance.SelectedSpot;
         var defaultToggle = toggles.Find(x => x.name == lastSpot.ToString());
 
@@ -47,6 +48,7 @@ public class SelectSpot : UIPage
         {
             return;
         }
+        SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         GameManager.Instance.SelectedSpot = int.Parse(selectedToggle.name);
         UIManager.Instance.Open<SelectPosterPage>();
     }

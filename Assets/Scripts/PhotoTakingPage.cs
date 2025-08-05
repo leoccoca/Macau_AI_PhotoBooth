@@ -54,6 +54,7 @@ public class PhotoTakingPage : UIPage
     {
         base.OpenPage();
 
+        GameManager.Instance.IsShowHomeBtn = false;
         captureImage.texture = Webcam.instance.LiveCameraTexture;
 
         shootBtn.gameObject.SetActive(true);
@@ -72,7 +73,6 @@ public class PhotoTakingPage : UIPage
 
     void OnShootBtnClick()
     {
-        SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         GameManager.Instance.IsShowHomeBtn = false;
         shootBtn.gameObject.SetActive(false);
         countdownAnimator.SetTrigger("Play");
@@ -99,6 +99,7 @@ public class PhotoTakingPage : UIPage
         confirmBtn.gameObject.SetActive(true);
 
         captureImage.texture = Webcam.instance.CapturePhoto();
+        SoundManager.Instance.PlaySfx(SoundFxID.cameraShot);
 
         photoReadyGO.SetActive(false);
         photoReviewGO.SetActive(true);

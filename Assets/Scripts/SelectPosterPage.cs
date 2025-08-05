@@ -27,6 +27,7 @@ public class SelectPosterPage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        GameManager.Instance.IsShowHomeBtn = true;
         base.ResetToggles(toggleGroup);
 
         string selectedGender = GameManager.Instance.SelectedGender;

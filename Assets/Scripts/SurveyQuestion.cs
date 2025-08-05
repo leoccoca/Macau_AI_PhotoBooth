@@ -14,6 +14,11 @@ public class SurveyQuestion : MonoBehaviour
 
     [SerializeField] ToggleGroup toggleGroup;
 
+    private void OnEnable()
+    {
+
+        StartCoroutine(ResetToggles());
+    }
 
     void Start()
     {
@@ -52,6 +57,5 @@ public class SurveyQuestion : MonoBehaviour
     public void SubmitAnswer()
     {
         surveyController.QuestionAnswer(questionID, answerID);
-        Debug.Log("submit"+this.name);
     }
 }

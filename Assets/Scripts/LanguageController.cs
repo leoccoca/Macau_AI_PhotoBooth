@@ -37,7 +37,7 @@ public class LanguageController : MonoBehaviour
 
         currentLanguage = newLang;
         OnLanguageChanged?.Invoke();
-        //ApplyLanguage(newLang);
+        SoundManager.Instance.PlaySfx(SoundFxID.langClick);
     }
 
     private void ApplyLanguage(langOptions lang)

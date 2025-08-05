@@ -6,6 +6,8 @@ public class SoundFxID
 {
     public const int buttonClick = 0;
     public const int countdown = 1;
+    public const int langClick = 2;
+    public const int cameraShot = 3;
 }
 
 public class SoundManager : MonoBehaviour
@@ -16,7 +18,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource sfxAudioSource;
     [SerializeField] AudioSource bgmAudioSource;
 
-    [SerializeField] List<AudioClip> sfxList;
+    [SerializeField] List<AudioClip> sfxlist;
 
     void Awake()
     {
@@ -42,9 +44,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySfx(int id)
     {
-        //if (sfxlist.count > id)
-        //{
-        //    sfxaudiosource.playoneshot(sfxlist[id]);
-        //}
+        if (sfxlist.Count > id)
+        {
+            sfxAudioSource.PlayOneShot(sfxlist[id]);
+        }
     }
 }

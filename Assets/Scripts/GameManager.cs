@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
 
     public bool AIProcessSucess;
     public bool DownloadPhotoIsReady;
+
     public Type AfterSurveyPage;
+
     public string JobId { get; private set; }
 
     string selectedGender;
@@ -379,6 +381,8 @@ public class GameManager : MonoBehaviour
         SelectedPoster = null;
         DownloadPhotoIsReady = false;
         AIProcessSucess = false;
+        AfterSurveyPage = null;
+
 
         WebRequestManager.Instance.GetTodayPrintJobCount(GetTodayPrintJobCallback);
         WebRequestManager.Instance.GetTotalPrintJobCount(GetTotalPrintJobCallback);

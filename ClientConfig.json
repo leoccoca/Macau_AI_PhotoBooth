@@ -7,6 +7,6 @@
 	"posterMobilePage": "https://galaxywellnesshub.sharing.com.hk/displayPoster.php?job_id=",
 	"apiTimeout": 180,
 	"printQuotaPerDay": 300,
-	"cameraIconOffset": 200,
+	"cameraIconOffset": 0,
 	"HavePrintFunction": 0
 }
