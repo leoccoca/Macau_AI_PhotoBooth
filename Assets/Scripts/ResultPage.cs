@@ -40,6 +40,7 @@ public class ResultPage : UIPage
         qrImage.texture = null;
 
         base.OpenPage();
+        LanguageController.Instance.LanguageBarActive(false);
 
         if (ConfigManager.Instance.clientConfig.HavePrintFunction == 1)
         {

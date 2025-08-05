@@ -17,6 +17,7 @@ public class LocalizedSpriteHandler : MonoBehaviour
     void OnEnable()
     {
         LanguageController.OnLanguageChanged += UpdateSprite;
+        UpdateSprite();
     }
 
     void OnDisable()

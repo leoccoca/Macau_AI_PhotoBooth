@@ -55,10 +55,11 @@ public class PhotoTakingPage : UIPage
         base.OpenPage();
 
         GameManager.Instance.IsShowHomeBtn = false;
+        LanguageController.Instance.LanguageBarActive(false);
         captureImage.texture = Webcam.instance.LiveCameraTexture;
 
         shootBtn.gameObject.SetActive(true);
-        //retakeBtn.gameObject.SetActive(false);
+        retakeBtn.gameObject.SetActive(false);
         confirmBtn.gameObject.SetActive(false);
 
         PoseText.gameObject.SetActive(true);

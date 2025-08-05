@@ -9,6 +9,7 @@ public class LocalizedTextHandler : MonoBehaviour
     void OnEnable()
     {
         LanguageController.OnLanguageChanged += UpdateTextVisibility;
+        UpdateTextVisibility();
     }
 
     void OnDisable()

@@ -26,6 +26,7 @@ public class SelectSpot : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        LanguageController.Instance.LanguageBarActive(false);
         GameManager.Instance.IsShowHomeBtn = true; 
         int lastSpot = GameManager.Instance.SelectedSpot;
         var defaultToggle = toggles.Find(x => x.name == lastSpot.ToString());

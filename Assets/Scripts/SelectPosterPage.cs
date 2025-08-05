@@ -27,6 +27,7 @@ public class SelectPosterPage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        LanguageController.Instance.LanguageBarActive(false);
         GameManager.Instance.IsShowHomeBtn = true;
         base.ResetToggles(toggleGroup);
 

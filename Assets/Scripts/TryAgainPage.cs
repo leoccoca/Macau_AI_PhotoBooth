@@ -24,6 +24,7 @@ public class TryAgainPage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        LanguageController.Instance.LanguageBarActive(false);
 
 
         /* TTD AI Photobooth remove retake function

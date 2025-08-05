@@ -8,6 +8,7 @@ public class LoadingPage : UIPage
     {
         base.OpenPage();
 
+        LanguageController.Instance.LanguageBarActive(false);
         GameManager.Instance.IsShowHomeBtn = false;
     }
 }

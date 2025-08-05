@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LanguageController : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class LanguageController : MonoBehaviour
         public GameObject scObj;
     }
 
+    [SerializeField] List<Toggle> langToggles = new List<Toggle>();
+    public Transform HomePagePos, SurveyPos;
+    [SerializeField] Transform LangBar;
+
     public List<LocalizedObject> localizedObjects = new List<LocalizedObject>();
 
     public static event System.Action OnLanguageChanged;
@@ -31,13 +36,43 @@ public class LanguageController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void OnLanguageChange(int lang)
+    {
+        LanguageController.Instance.ChangeLanguage((LanguageController.langOptions)lang);
+    }
     public void ChangeLanguage(langOptions newLang)
     {
         if (currentLanguage == newLang) return;
-
+        Debug.Log("LANG change to:" + newLang);
         currentLanguage = newLang;
+        UpdateLangToggle();
         OnLanguageChanged?.Invoke();
         SoundManager.Instance.PlaySfx(SoundFxID.langClick);
+    }
+
+    void UpdateLangToggle()
+    {
+        for (int i = 0; i < langToggles.Count; i++)
+        {
+            if ((int)currentLanguage == i) {
+                langToggles[i].isOn = true;
+            }
+            else
+            {
+                langToggles[i].isOn = false;
+            }
+        }
+    }
+
+    public void UpdatePosition(Transform target)
+    {
+        LangBar.position = target.position;
+    }
+
+    public void LanguageBarActive(bool active)
+    {
+        LangBar.gameObject.SetActive(active);
     }
 
     private void ApplyLanguage(langOptions lang)

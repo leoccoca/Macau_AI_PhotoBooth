@@ -270,6 +270,7 @@ public class GameManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         ResetData();
+        LanguageController.Instance.OnLanguageChange((int)LanguageController.langOptions.en);
         UIManager.Instance.Open<HomePage>();
     }
 

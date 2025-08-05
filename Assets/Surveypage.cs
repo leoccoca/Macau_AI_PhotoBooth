@@ -34,6 +34,8 @@ public class Surveypage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
+        LanguageController.Instance.UpdatePosition(LanguageController.Instance.SurveyPos);
+        LanguageController.Instance.LanguageBarActive(true);
         SurveyCompleted = false;
         ResetQuestion();
         GameManager.Instance.IsShowHomeBtn = false;
