@@ -40,6 +40,8 @@ public class SelectPosterPage : UIPage
         int selectedSpot = GameManager.Instance.SelectedSpot;
         List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => x.Category == selectedSpot);
 
+        backBtn.interactable = true;
+
         base.ResetToggles(toggleGroup);
         setToggles(true);
         //List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => (x.Gender == selectedGender)&& (x.Category == selectedSpot));
@@ -115,12 +117,10 @@ public class SelectPosterPage : UIPage
         if(valueChange==false) { return; }
         var selectedToggle = toggles.Find(x => x.isOn);
 
-        if (selectedToggle == null)
-        {
-            return;
-        }
+        if (selectedToggle == null) { return; }
 
         setToggles(false);
+        backBtn.interactable = false;
         StartCoroutine(DelayNextPage());
     }
     IEnumerator DelayNextPage()

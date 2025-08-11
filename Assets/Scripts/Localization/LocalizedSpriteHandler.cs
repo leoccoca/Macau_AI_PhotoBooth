@@ -45,5 +45,6 @@ public class LocalizedSpriteHandler : MonoBehaviour
                 image.sprite = sprite_sc;
                 break;
         }
+        image.SetNativeSize();
     }
 }

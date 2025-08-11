@@ -38,7 +38,8 @@ public class Surveypage : UIPage
         LanguageController.Instance.LanguageBarActive(true);
         SurveyCompleted = false;
         ResetQuestion();
-        GameManager.Instance.IsShowHomeBtn = false;
+
+        GameManager.Instance.IsShowHomeBtn = true;
         ResetQuestion();
         NextQuestion(currentQuestion);
     }

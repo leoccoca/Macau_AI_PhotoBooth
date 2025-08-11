@@ -7,7 +7,7 @@ public class LanguageController : MonoBehaviour
     public static LanguageController Instance { get; private set; }
 
     public enum langOptions { en, tc, sc }
-    public langOptions currentLanguage = langOptions.en;
+    public langOptions currentLanguage = langOptions.tc;
 
     [System.Serializable]
     public class LocalizedObject
@@ -39,10 +39,13 @@ public class LanguageController : MonoBehaviour
 
     public void OnLanguageChange(int lang)
     {
-        LanguageController.Instance.ChangeLanguage((LanguageController.langOptions)lang);
+        ChangeLanguage((LanguageController.langOptions)lang);
     }
     public void ChangeLanguage(langOptions newLang)
     {
+        var selectedToggle = langToggles.Find(x => x.isOn);
+
+        if (selectedToggle == null) { return; }
         if (currentLanguage == newLang) return;
         Debug.Log("LANG change to:" + newLang);
         currentLanguage = newLang;

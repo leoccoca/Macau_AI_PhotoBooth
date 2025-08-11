@@ -58,6 +58,8 @@ public class SurveyQuestion : MonoBehaviour
     {
         answerID = -1;
         nextBtn.interactable = false;
+        //no need nextbtn update
+        nextBtn.gameObject.SetActive(false);
     }
 
 
@@ -69,9 +71,8 @@ public class SurveyQuestion : MonoBehaviour
         {
             return;
         }
-        Debug.Log("SurVey Selected");
         setToggles(false);
-        answerID = int.Parse( ans);
+        answerID = int.Parse(ans);
         //nextBtn.interactable = true;
         StartCoroutine(DelayNextPage());
     }

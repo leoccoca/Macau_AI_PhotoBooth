@@ -25,6 +25,7 @@ public class TryAgainPage : UIPage
     {
         base.OpenPage();
         LanguageController.Instance.LanguageBarActive(false);
+        GameManager.Instance.IsShowHomeBtn = true;
 
 
         /* TTD AI Photobooth remove retake function

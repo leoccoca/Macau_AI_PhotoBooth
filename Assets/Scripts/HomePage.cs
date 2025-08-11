@@ -25,7 +25,7 @@ public class HomePage : UIPage
     public override void OpenPage()
     {
         base.OpenPage();
-        LanguageController.Instance.OnLanguageChange((int)LanguageController.langOptions.en);
+        LanguageController.Instance.OnLanguageChange((int)LanguageController.langOptions.tc);
         LanguageController.Instance.UpdatePosition(LanguageController.Instance.HomePagePos);
         LanguageController.Instance.LanguageBarActive(true);
         GameManager.Instance.IsShowHomeBtn = false;

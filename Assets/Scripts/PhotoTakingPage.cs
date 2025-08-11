@@ -38,6 +38,7 @@ public class PhotoTakingPage : UIPage
     {
         Debug.Log("PhotoTakingPage Start()");
         countdownAnimator = GetComponent<Animator>();
+        GameManager.Instance.IsShowHomeBtn = true;
 
         shootBtn.onClick.AddListener(OnShootBtnClick);
         confirmBtn.onClick.AddListener(OnConfirmBtnClick);

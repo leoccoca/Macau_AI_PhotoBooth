@@ -1,6 +1,6 @@
 {
 	"debugLog": 1,
-	"webCamName": "OBS Virtual Camera",
+	"webCamName": "USB Camera",
 	"imageDirectory": "C:\\MT\\AI_PhotoBooth_Record",
 	"webServerURL": "https://galaxywellnesshub.sharing.com.hk/",
 
