@@ -75,6 +75,7 @@ public class PhotoTakingPage : UIPage
         photoReviewGO.SetActive(false);
 
         CountDown.SetActive(false);
+        OnShootBtnClick();
 
     }
 
@@ -167,6 +168,7 @@ public class PhotoTakingPage : UIPage
 
         photoReadyGO.SetActive(true);
         photoReviewGO.SetActive(false);
+        OnShootBtnClick();
     }
 
     public void HideAllBtn()

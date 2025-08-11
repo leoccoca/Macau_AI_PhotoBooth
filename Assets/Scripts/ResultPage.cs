@@ -157,6 +157,9 @@ public class ResultPage : UIPage
     string CreateLink()
     {
         string baseURL = ConfigManager.Instance.clientConfig.posterMobilePage;
-        return baseURL + GameManager.Instance.JobId;
+        string jobID = GameManager.Instance.JobId;
+        string lang = "&lang=" + LanguageController.Instance.currentLanguage;
+
+        return baseURL + jobID + lang;
     }
 }
