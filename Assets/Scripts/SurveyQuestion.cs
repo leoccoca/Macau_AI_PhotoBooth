@@ -19,21 +19,20 @@ public class SurveyQuestion : MonoBehaviour
 
     private void OnEnable()
     {
-        toggles.ForEach(t => t.onValueChanged.AddListener(OnAnswerSelected(t.name)));
         StartCoroutine(ResetToggles(toggleGroup));
         ResetQuestion();
     }
 
     void Start()
     {
-        toggles.ForEach(t => t.onValueChanged.AddListener(OnAnswerSelected(t.name));
+        toggles.ForEach(t => t.onValueChanged.AddListener(isOn => OnAnswerSelected(t.name)));
         StartCoroutine(ResetToggles(toggleGroup));
         ResetQuestion();
 
     }
     private void OnDestroy()
     {
-
+        toggles.ForEach(t => t.onValueChanged.RemoveListener(isOn => OnAnswerSelected(t.name)));
         //nextBtn.onClick.RemoveListener(SubmitAnswer);
     }
 
