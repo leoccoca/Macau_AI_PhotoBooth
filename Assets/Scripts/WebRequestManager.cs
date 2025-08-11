@@ -57,18 +57,23 @@ public class WebRequestManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("secret", GameDefine.API_SECRET);
         form.AddField("poster_id", GameManager.Instance.SelectedPoster.Id);
-        //form.AddField("poster_uuid", GameManager.Instance.SelectedPoster.RefImageId);
         form.AddField("job_id", GameManager.Instance.JobId);
-        //form.AddField("prompt", GameManager.Instance.SelectedPoster.Prompt);
-        //form.AddField("strength_1", GameManager.Instance.SelectedPoster.Strength1);
-        //form.AddField("strength_2", GameManager.Instance.SelectedPoster.Strength2);
-        //form.AddField("model_name", GameManager.Instance.SelectedPoster.ModelName);
-        //form.AddField("preset_style", GameManager.Instance.SelectedPoster.PresetStyle);
         form.AddField("target_image_url", GameManager.Instance.SelectedPoster.TargetImageUrl);
 
         byte[] bytes = File.ReadAllBytes(photoPath);
         form.AddBinaryData("file", bytes, Path.GetFileName(photoPath), "image/jpeg");
 
+        StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
+    }
+    public void UpdateSurveyRecord(string surveyRecord, Action<string> successCallback, Action<string> failCallback)
+    {
+        string url = ConfigManager.Instance.clientConfig.webServerURL + "updateSurvey.php";
+
+        WWWForm form = new WWWForm();
+        form.AddField("secret", GameDefine.API_SECRET);
+        form.AddField("job_id", GameManager.Instance.JobId);
+        //survey record
+        form.AddField("survey_record", GameManager.Instance.SurveyRecord);
         StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
     }
 

@@ -86,7 +86,8 @@ public class Surveypage : UIPage
     {
         Debug.Log("SurveyComplete:"+SurveyRecord);
         SurveyCompleted = true;
-
+        GameManager.Instance.SurveyRecord = SurveyRecord;
+        GameManager.Instance.UpdateSurveyRecord();
         Type nextPage = GameManager.Instance.AfterSurveyPage;
         if (nextPage!=null)
         {

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Type AfterSurveyPage;
 
     public string JobId { get; private set; }
+    public string SurveyRecord { get; set; }
 
     string selectedGender;
     public string SelectedGender
@@ -295,6 +296,20 @@ public class GameManager : MonoBehaviour
         WebRequestManager.Instance.ProcessPhotoFaceSwapOnly(SelfiePath, UploadPhotoForAIProcessSuccessCallback, UploadPhotoForAIProcessFailCallback);
     }
 
+    public void UpdateSurveyRecord()
+    {
+        WebRequestManager.Instance.UpdateSurveyRecord(GameManager.instance.SurveyRecord, UpdateSurveySuccessCallback, UpdateSurveyFailCallback);
+    }
+
+    void UpdateSurveySuccessCallback(string res)
+    {
+        Debug.Log("UpdataSurveySuccess res: " + res);
+    }
+    void UpdateSurveyFailCallback(string res)
+    {
+        Debug.LogError("UpdataSurveyFail res: " + res);
+    }
+
     void UploadPhotoForAIProcessSuccessCallback(string res)
     {
         Debug.Log("UploadPhotoSuccess res: " + res);
@@ -378,6 +393,7 @@ public class GameManager : MonoBehaviour
         IsRetakeAlready = false;
         SelfiePath = "";
         PosterPath = "";
+        SurveyRecord = "";
         GameError = ErrorType.None;
         SelectedPoster = null;
         DownloadPhotoIsReady = false;
