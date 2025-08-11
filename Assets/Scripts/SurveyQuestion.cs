@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SurveyQuestion : MonoBehaviour
 {
@@ -13,24 +15,35 @@ public class SurveyQuestion : MonoBehaviour
     [SerializeField] Button nextBtn;
 
     [SerializeField] ToggleGroup toggleGroup;
+    [SerializeField] List<Toggle> toggles;
 
     private void OnEnable()
     {
-
-        StartCoroutine(ResetToggles());
+        toggles.ForEach(t => t.onValueChanged.AddListener(OnAnswerSelected(t.name)));
+        StartCoroutine(ResetToggles(toggleGroup));
+        ResetQuestion();
     }
 
     void Start()
     {
-        nextBtn.onClick.AddListener(SubmitAnswer);
-        StartCoroutine(ResetToggles());
+        toggles.ForEach(t => t.onValueChanged.AddListener(OnAnswerSelected(t.name));
+        StartCoroutine(ResetToggles(toggleGroup));
+        ResetQuestion();
+
     }
     private void OnDestroy()
     {
 
-        nextBtn.onClick.RemoveListener(SubmitAnswer);
+        //nextBtn.onClick.RemoveListener(SubmitAnswer);
     }
 
+    IEnumerator ResetToggles(ToggleGroup toggleGroup)
+    {
+        yield return null;
+        toggleGroup.SetAllTogglesOff();
+    }
+
+    /*
     IEnumerator ResetToggles()
     {
         yield return null;
@@ -40,6 +53,7 @@ public class SurveyQuestion : MonoBehaviour
 
         ResetQuestion();
     }
+    */
 
     void ResetQuestion()
     {
@@ -48,11 +62,37 @@ public class SurveyQuestion : MonoBehaviour
     }
 
 
-    public void OnAnswerSelected(int ans)
+    public void OnAnswerSelected(string ans)
     {
-        answerID = ans;
-        nextBtn.interactable = true;
+        var selectedToggle = toggles.Find(x => x.isOn);
+
+        if (selectedToggle == null)
+        {
+            return;
+        }
+        Debug.Log("SurVey Selected");
+        setToggles(false);
+        answerID = int.Parse( ans);
+        //nextBtn.interactable = true;
+        StartCoroutine(DelayNextPage());
     }
+
+
+    void setToggles(bool active)
+    {
+        foreach (var toggle in toggles)
+        {
+            toggle.interactable = active;
+        }
+    }
+
+    IEnumerator DelayNextPage()
+    {
+        yield return new WaitForSeconds(1);
+        SubmitAnswer();
+    }
+
+
 
     public void SubmitAnswer()
     {

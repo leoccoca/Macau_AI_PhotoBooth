@@ -30,6 +30,9 @@ public class PhotoTakingPage : UIPage
 
     [SerializeField] Transform cameraIconTrans;
 
+    [SerializeField] Transform CenterPos, OriginalPos;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +64,7 @@ public class PhotoTakingPage : UIPage
         shootBtn.gameObject.SetActive(true);
         retakeBtn.gameObject.SetActive(false);
         confirmBtn.gameObject.SetActive(false);
+        confirmBtn.transform.position = OriginalPos.position;
 
         PoseText.gameObject.SetActive(true);
         LookAtCam.gameObject.SetActive(false);
@@ -70,6 +74,7 @@ public class PhotoTakingPage : UIPage
         photoReviewGO.SetActive(false);
 
         CountDown.SetActive(false);
+
     }
 
     void OnShootBtnClick()
@@ -97,6 +102,10 @@ public class PhotoTakingPage : UIPage
         bool isRetakeAlready = GameManager.Instance.IsRetakeAlready;
 
         retakeBtn.gameObject.SetActive(!isRetakeAlready);
+        if (isRetakeAlready)
+        {
+            confirmBtn.transform.position = CenterPos.position;
+        }
         confirmBtn.gameObject.SetActive(true);
 
         captureImage.texture = Webcam.instance.CapturePhoto();
