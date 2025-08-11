@@ -37,16 +37,16 @@ public class Surveypage : UIPage
         LanguageController.Instance.UpdatePosition(LanguageController.Instance.SurveyPos);
         LanguageController.Instance.LanguageBarActive(true);
         SurveyCompleted = false;
-        ResetQuestion();
+        ResetSurvey();
 
         GameManager.Instance.IsShowHomeBtn = true;
-        ResetQuestion();
         NextQuestion(currentQuestion);
     }
 
-    void ResetQuestion()
+    void ResetSurvey()
     {
         currentQuestion = 0;
+        SurveyRecord = string.Empty;
         foreach (var q in questions) {
             q.surveyController = this;
             q.gameObject.SetActive(false);

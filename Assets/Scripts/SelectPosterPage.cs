@@ -40,7 +40,6 @@ public class SelectPosterPage : UIPage
         int selectedSpot = GameManager.Instance.SelectedSpot;
         List<PosterInfo> filteredPosters = GameManager.Instance.PosterInfos.FindAll(x => x.Category == selectedSpot);
 
-        backBtn.interactable = true;
 
         base.ResetToggles(toggleGroup);
         setToggles(true);
@@ -120,7 +119,6 @@ public class SelectPosterPage : UIPage
         if (selectedToggle == null) { return; }
 
         setToggles(false);
-        backBtn.interactable = false;
         StartCoroutine(DelayNextPage());
     }
     IEnumerator DelayNextPage()

@@ -58,7 +58,7 @@ public class PhotoTakingPage : UIPage
     {
         base.OpenPage();
 
-        GameManager.Instance.IsShowHomeBtn = false;
+        GameManager.Instance.IsShowHomeBtn = true;
         LanguageController.Instance.LanguageBarActive(false);
         captureImage.texture = Webcam.instance.LiveCameraTexture;
 

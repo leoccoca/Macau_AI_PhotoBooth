@@ -57,8 +57,9 @@ public class SurveyQuestion : MonoBehaviour
     void ResetQuestion()
     {
         answerID = -1;
-        nextBtn.interactable = false;
+        //nextBtn.interactable = true;
         //no need nextbtn update
+        setToggles(true);
         nextBtn.gameObject.SetActive(false);
     }
 
