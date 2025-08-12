@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
         AIProcessSucess = false;
         AfterSurveyPage = null;
 
+        GetComponent<InActiveTimer>().SetTimerActive(false);
 
         WebRequestManager.Instance.GetTodayPrintJobCount(GetTodayPrintJobCallback);
         WebRequestManager.Instance.GetTotalPrintJobCount(GetTotalPrintJobCallback);

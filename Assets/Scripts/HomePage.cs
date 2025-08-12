@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HomePage : UIPage
 {
     [SerializeField] Button startBtn;
+    [SerializeField] InActiveTimer timer;
 
 
     // Start is called before the first frame update
@@ -14,12 +15,14 @@ public class HomePage : UIPage
     {
         Debug.Log("HomePage.Start()");
         startBtn.onClick.AddListener(OnStartBtnClick);
+        startBtn.onClick.AddListener(StartBackGroundTimer);
     }
 
     void OnDestroy()
     {
         Debug.Log("HomePage.OnDestroy()");
         startBtn.onClick.RemoveListener(OnStartBtnClick);
+        startBtn.onClick.RemoveListener(StartBackGroundTimer);
     }
 
     public override void OpenPage()
@@ -42,6 +45,11 @@ public class HomePage : UIPage
         }
         SoundManager.Instance.PlaySfx(SoundFxID.buttonClick);
         UIManager.Instance.Open<SelectSpot>();
+    }
+
+    void StartBackGroundTimer()
+    {
+        timer.SetTimerActive(true);
     }
 
 

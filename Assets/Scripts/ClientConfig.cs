@@ -17,6 +17,7 @@ public class ClientConfig
     public string webServerURL = "";
     public string posterMobilePage = "";
     public int apiTimeout = 60;
+    public int programTimeout = 60;
 
     // printer
     public int printQuotaPerDay = 0;
