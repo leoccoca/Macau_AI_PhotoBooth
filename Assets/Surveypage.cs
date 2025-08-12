@@ -67,9 +67,9 @@ public class Surveypage : UIPage
         questions[question].gameObject.SetActive(true);
     }
 
-    public void QuestionAnswer(int questionID, int answerID)
+    public void QuestionAnswer(int questionID, string answerID)
     {
-        string questionans = questionID + ":" + answerID;
+        string questionans = questionID + "-" + answerID;
         if (questionID < questions.Count )
         {
             SurveyRecord += questionans + ",";
@@ -77,6 +77,7 @@ public class Surveypage : UIPage
         }
         else
         {
+            SurveyRecord+= questionans;
             SurveySubmit();
         }
     }

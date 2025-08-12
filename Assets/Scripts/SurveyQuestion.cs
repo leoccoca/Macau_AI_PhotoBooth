@@ -10,12 +10,15 @@ public class SurveyQuestion : MonoBehaviour
     // Start is called before the first frame update
     public Surveypage surveyController;
     [SerializeField] int questionID;
-    [SerializeField] int answerID;
+    [SerializeField] string answerID;
 
     [SerializeField] Button nextBtn;
 
     [SerializeField] ToggleGroup toggleGroup;
     [SerializeField] List<Toggle> toggles;
+
+
+    [SerializeField] bool isMultipleChoice = false;
 
     private void OnEnable()
     {
@@ -25,15 +28,30 @@ public class SurveyQuestion : MonoBehaviour
 
     void Start()
     {
-        toggles.ForEach(t => t.onValueChanged.AddListener(isOn => OnAnswerSelected(t.name)));
         StartCoroutine(ResetToggles(toggleGroup));
         ResetQuestion();
+        if (isMultipleChoice)
+        {
+            toggleGroup.enabled = false;
+            nextBtn.onClick.AddListener(SubmitAnswer);
+        }
+        else
+        {
+            toggleGroup.enabled = true;
+            toggles.ForEach(t => t.onValueChanged.AddListener(isOn => OnAnswerSelected(t.name)));
+        }
 
     }
     private void OnDestroy()
     {
-        toggles.ForEach(t => t.onValueChanged.RemoveListener(isOn => OnAnswerSelected(t.name)));
-        //nextBtn.onClick.RemoveListener(SubmitAnswer);
+        if (isMultipleChoice)
+        {
+            nextBtn.onClick.RemoveListener(SubmitAnswer);
+        }
+        else
+        {
+            toggles.ForEach(t => t.onValueChanged.RemoveListener(isOn => OnAnswerSelected(t.name)));
+        }
     }
 
     IEnumerator ResetToggles(ToggleGroup toggleGroup)
@@ -56,24 +74,33 @@ public class SurveyQuestion : MonoBehaviour
 
     void ResetQuestion()
     {
-        answerID = -1;
-        //nextBtn.interactable = true;
+        answerID = "-1";
+        if (isMultipleChoice)
+        {
+            nextBtn.gameObject.SetActive(true);
+            nextBtn.interactable = true;
+        }
+        else
+        {
+            nextBtn.gameObject.SetActive(false);
+        }
         //no need nextbtn update
         setToggles(true);
-        nextBtn.gameObject.SetActive(false);
     }
 
 
     public void OnAnswerSelected(string ans)
     {
         var selectedToggle = toggles.Find(x => x.isOn);
-
+        
         if (selectedToggle == null)
         {
             return;
         }
+
+
         setToggles(false);
-        answerID = int.Parse(ans);
+        answerID = ans;
         //nextBtn.interactable = true;
         StartCoroutine(DelayNextPage());
     }
@@ -97,6 +124,23 @@ public class SurveyQuestion : MonoBehaviour
 
     public void SubmitAnswer()
     {
+        if (isMultipleChoice)
+        {
+            answerID = "";
+            var selectedToggles = toggles.Where(x => x.isOn).ToList();
+
+            if (selectedToggles.Count == 0)
+            {
+                Debug.Log("No Options selected");
+                return;
+            }
+            string ans = "";
+            foreach (var toggle in selectedToggles)
+            {
+                answerID += toggle.gameObject.name+".";
+            }
+        }
+
         surveyController.QuestionAnswer(questionID, answerID);
     }
 }

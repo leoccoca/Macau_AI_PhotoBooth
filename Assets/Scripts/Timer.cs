@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
             timeLeft--;
         }
 
-
+        Debug.Log("disclaimer timesOut");
         GameManager.Instance.RestartGame();
     }
 }
