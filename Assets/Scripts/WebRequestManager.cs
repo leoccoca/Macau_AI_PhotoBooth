@@ -73,6 +73,7 @@ public class WebRequestManager : MonoBehaviour
         form.AddField("secret", GameDefine.API_SECRET);
         form.AddField("job_id", GameManager.Instance.JobId);
         //survey record
+        form.AddField("sport_id", GameManager.Instance.SelectedSpot);
         form.AddField("survey_record", GameManager.Instance.SurveyRecord);
         StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
     }

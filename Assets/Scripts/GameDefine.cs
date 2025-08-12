@@ -19,5 +19,5 @@ public class GameDefine
     public static readonly string SPOT_4 = "SP4";
 
     public static readonly Vector2 FRAME_SIZE = new(512, 768);
-    public static readonly int SELFIE_DELAY = 5;
+    public static readonly int SELFIE_DELAY = 8;
 }
