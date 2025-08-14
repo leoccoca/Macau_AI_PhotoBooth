@@ -40,7 +40,7 @@ public class PhotoTakingPage : UIPage
         countdownAnimator = GetComponent<Animator>();
         GameManager.Instance.IsShowHomeBtn = true;
 
-        shootBtn.onClick.AddListener(OnShootBtnClick);
+        //shootBtn.onClick.AddListener(OnShootBtnClick);
         confirmBtn.onClick.AddListener(OnConfirmBtnClick);
         retakeBtn.onClick.AddListener(OnRetakeBtnClick);
 
@@ -49,7 +49,7 @@ public class PhotoTakingPage : UIPage
 
     private void OnDestroy()
     {
-        shootBtn.onClick.RemoveListener(OnShootBtnClick);
+        //shootBtn.onClick.RemoveListener(OnShootBtnClick);
         confirmBtn.onClick.RemoveListener(OnConfirmBtnClick);
         retakeBtn.onClick.RemoveListener(OnRetakeBtnClick);
     }
@@ -58,6 +58,7 @@ public class PhotoTakingPage : UIPage
     {
         base.OpenPage();
 
+        Debug.Log("PhotoTakingPage OpenPage()");
         GameManager.Instance.IsShowHomeBtn = true;
         LanguageController.Instance.LanguageBarActive(false);
         captureImage.texture = Webcam.instance.LiveCameraTexture;
@@ -75,20 +76,27 @@ public class PhotoTakingPage : UIPage
         photoReviewGO.SetActive(false);
 
         CountDown.SetActive(false);
-        OnShootBtnClick();
+        StartCoroutine( OnShootBtnClick());
 
     }
 
-    void OnShootBtnClick()
+    public void HardShootBtnClick()
     {
-        GameManager.Instance.IsShowHomeBtn = false;
+        StartCoroutine(OnShootBtnClick());
+    }
+    IEnumerator OnShootBtnClick()
+    //void OnShootBtnClick()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log("OnShootBtnClick ");
+        GameManager.Instance.IsShowHomeBtn = true;
         shootBtn.gameObject.SetActive(false);
         countdownAnimator.SetTrigger("Play");
         CameraArrowAnimator.SetTrigger("Play");
 
         if (shootCountdownCr != null)
         {
-            return;
+            yield return null;
         }
         shootCountdownCr = StartCoroutine(StartCountdown(ShootPhotoCallback));
 
@@ -168,7 +176,7 @@ public class PhotoTakingPage : UIPage
 
         photoReadyGO.SetActive(true);
         photoReviewGO.SetActive(false);
-        OnShootBtnClick();
+        StartCoroutine( OnShootBtnClick());
     }
 
     public void HideAllBtn()
