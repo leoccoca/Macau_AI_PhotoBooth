@@ -298,17 +298,19 @@ public class GameManager : MonoBehaviour
 
     public void UpdateSurveyRecord()
     {
-        WebRequestManager.Instance.UpdateSurveyRecord(GameManager.instance.SurveyRecord, UpdateSurveySuccessCallback, UpdateSurveyFailCallback);
+        //WebRequestManager.Instance.UpdateSurveyRecord( UpdateSurveySuccessCallback, UpdateSurveyFailCallback);
+        WebRequestManager.Instance.UpdateFullRecordForView(UpdateFullRecordCallbackSuccess, UpdateFullRecordCallbackFail);
+    }
+    void UpdateFullRecordCallbackSuccess(string res)
+    {
+        Debug.Log("UpdateFullRecordSuccess res: " + res);
+    }
+    void UpdateFullRecordCallbackFail(string res)
+    {
+        Debug.LogError("UpdateFullRecordFail res: " + res);
     }
 
-    void UpdateSurveySuccessCallback(string res)
-    {
-        Debug.Log("UpdataSurveySuccess res: " + res);
-    }
-    void UpdateSurveyFailCallback(string res)
-    {
-        Debug.LogError("UpdataSurveyFail res: " + res);
-    }
+
 
     void UploadPhotoForAIProcessSuccessCallback(string res)
     {

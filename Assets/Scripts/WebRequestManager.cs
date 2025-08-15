@@ -65,7 +65,7 @@ public class WebRequestManager : MonoBehaviour
 
         StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
     }
-    public void UpdateSurveyRecord(string surveyRecord, Action<string> successCallback, Action<string> failCallback)
+    public void UpdateSurveyRecord( Action<string> successCallback, Action<string> failCallback)
     {
         string url = ConfigManager.Instance.clientConfig.webServerURL + "updateSurvey.php";
 
@@ -75,6 +75,21 @@ public class WebRequestManager : MonoBehaviour
         //survey record
         form.AddField("sport_id", GameManager.Instance.SelectedSpot);
         form.AddField("survey_record", GameManager.Instance.SurveyRecord);
+        StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
+    }
+    public void UpdateFullRecordForView(Action<string> successCallback, Action<string> failCallback)
+    {
+        string url = ConfigManager.Instance.clientConfig.webServerURL + "api/add_player_record.php";
+        WWWForm form = new WWWForm();
+        form.AddField("sport", GameManager.Instance.SelectedSpot);
+        form.AddField("q1", GameManager.Instance.SurveyRecord);
+        form.AddField("q2", GameManager.Instance.SurveyRecord);
+        form.AddField("q3", GameManager.Instance.SurveyRecord);
+        form.AddField("q4", GameManager.Instance.SurveyRecord);
+        form.AddField("q5", GameManager.Instance.SurveyRecord);
+        form.AddField("q6", GameManager.Instance.SurveyRecord);
+        form.AddField("q7", GameManager.Instance.SurveyRecord);
+        form.AddField("job_id", GameManager.Instance.JobId);
         StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
     }
 
