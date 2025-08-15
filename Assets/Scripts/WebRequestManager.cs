@@ -82,13 +82,7 @@ public class WebRequestManager : MonoBehaviour
         string url = ConfigManager.Instance.clientConfig.webServerURL + "api/add_player_record.php";
         WWWForm form = new WWWForm();
         form.AddField("sport", GameManager.Instance.SelectedSpot);
-        form.AddField("q1", GameManager.Instance.SurveyRecord);
-        form.AddField("q2", GameManager.Instance.SurveyRecord);
-        form.AddField("q3", GameManager.Instance.SurveyRecord);
-        form.AddField("q4", GameManager.Instance.SurveyRecord);
-        form.AddField("q5", GameManager.Instance.SurveyRecord);
-        form.AddField("q6", GameManager.Instance.SurveyRecord);
-        form.AddField("q7", GameManager.Instance.SurveyRecord);
+        form.AddField("surveyAns", GameManager.Instance.SurveyRecord);
         form.AddField("job_id", GameManager.Instance.JobId);
         StartCoroutine(RequestUrlPost(url, form, successCallback, failCallback));
     }

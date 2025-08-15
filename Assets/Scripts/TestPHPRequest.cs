@@ -15,16 +15,11 @@ public class TestPHPPostSimple : MonoBehaviour
         string url = "https://galaxywellnesshub.sharing.com.hk/api/add_player_record.php";
 
         WWWForm form = new WWWForm();
-        form.AddField("sport", "TestSport");
-        form.AddField("q1", "1");
-        form.AddField("q2", "2");
-        form.AddField("q3", "3");
-        form.AddField("q4", "4");
-        form.AddField("q5", "5");
-        form.AddField("q6", "6");
-        form.AddField("q7", "7");
-        form.AddField("job_id", "JIASDJHIAOSDN");
-        
+        form.AddField("sport", "2");
+        form.AddField("surveyAns", "1-9,2-2,3-2,4-2,5-1,6-4.5.3.2.1,7-3.6.1,8-1");
+
+        // Example job ID
+        form.AddField("job_id", "12345");
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
